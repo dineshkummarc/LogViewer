@@ -12,9 +12,12 @@ namespace LogViewer
 {
     public partial class LogViewer : Form
     {
+        public LogEntryList MyLogEntryList { get; private set; }
+
         public LogViewer()
         {
             InitializeComponent();
+            MyLogEntryList = new LogEntryList();
         }
 
         private void mnuExit_Click(object sender, EventArgs e)
@@ -37,22 +40,24 @@ namespace LogViewer
             {
                 return;
             }
+            ReadLogDataFromFile(openFile.FileName);
+            DisplayLogEntries();
+        }
 
-            string filePath = openFile.FileName;
-            string line;
-
+        private void ReadLogDataFromFile(string filePath)
+        {
             if (File.Exists(filePath))
             {
+                MyLogEntryList.Clear();
                 StreamReader file = null;
-                lvMain.Items.Clear();
+                string line;
                 int lineNumber = 1;
                 try
                 {
                     file = new StreamReader(filePath);
                     while ((line = file.ReadLine()) != null)
                     {
-                        var lvi = new string[] {lineNumber.ToString(), line };
-                        lvMain.Items.Add(new ListViewItem(lvi));
+                        MyLogEntryList.Add(new LogEntry(lineNumber.ToString(), line));
                         lineNumber++;
                     }
                 }
@@ -67,6 +72,15 @@ namespace LogViewer
                         file.Close();
                     }
                 }
+            }
+        }
+
+        private void DisplayLogEntries()
+        {
+            lvMain.Items.Clear();
+            foreach (LogEntry entry in MyLogEntryList)
+            {
+                lvMain.Items.Add(new ListViewItem(entry.EntryPair()));
             }
         }
     }
