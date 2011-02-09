@@ -1,0 +1,13 @@
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.suo
+*.user
+bin
+obj
+publish
+_UpgradeReport_Files
+UpgradeLog.XML
