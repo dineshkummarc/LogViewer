@@ -37,6 +37,8 @@
             this.lvMain = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cboFilterSetting = new System.Windows.Forms.ComboBox();
+            this.txtFilterText = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,20 +59,20 @@
             this.mnuOpen,
             this.mnuExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // mnuOpen
             // 
             this.mnuOpen.Name = "mnuOpen";
-            this.mnuOpen.Size = new System.Drawing.Size(111, 22);
+            this.mnuOpen.Size = new System.Drawing.Size(103, 22);
             this.mnuOpen.Text = "&Open";
             this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
             // 
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(111, 22);
+            this.mnuExit.Size = new System.Drawing.Size(103, 22);
             this.mnuExit.Text = "E&xit";
             this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
             // 
@@ -79,13 +81,13 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuAbout});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // mnuAbout
             // 
             this.mnuAbout.Name = "mnuAbout";
-            this.mnuAbout.Size = new System.Drawing.Size(114, 22);
+            this.mnuAbout.Size = new System.Drawing.Size(107, 22);
             this.mnuAbout.Text = "&About";
             this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
@@ -99,9 +101,9 @@
             this.columnHeader2});
             this.lvMain.FullRowSelect = true;
             this.lvMain.HideSelection = false;
-            this.lvMain.Location = new System.Drawing.Point(0, 27);
+            this.lvMain.Location = new System.Drawing.Point(0, 56);
             this.lvMain.Name = "lvMain";
-            this.lvMain.Size = new System.Drawing.Size(648, 316);
+            this.lvMain.Size = new System.Drawing.Size(648, 290);
             this.lvMain.TabIndex = 1;
             this.lvMain.UseCompatibleStateImageBehavior = false;
             this.lvMain.View = System.Windows.Forms.View.Details;
@@ -116,11 +118,32 @@
             this.columnHeader2.Text = "Log Entry";
             this.columnHeader2.Width = 502;
             // 
+            // cboFilterSetting
+            // 
+            this.cboFilterSetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFilterSetting.FormattingEnabled = true;
+            this.cboFilterSetting.Location = new System.Drawing.Point(118, 27);
+            this.cboFilterSetting.Name = "cboFilterSetting";
+            this.cboFilterSetting.Size = new System.Drawing.Size(255, 21);
+            this.cboFilterSetting.TabIndex = 2;
+            this.cboFilterSetting.SelectedIndexChanged += new System.EventHandler(this.cboFilterSetting_SelectedIndexChanged);
+            // 
+            // txtFilterText
+            // 
+            this.txtFilterText.Location = new System.Drawing.Point(379, 27);
+            this.txtFilterText.Name = "txtFilterText";
+            this.txtFilterText.ReadOnly = true;
+            this.txtFilterText.Size = new System.Drawing.Size(209, 20);
+            this.txtFilterText.TabIndex = 3;
+            this.txtFilterText.TextChanged += new System.EventHandler(this.txtFilterText_TextChanged);
+            // 
             // LogViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(648, 345);
+            this.ClientSize = new System.Drawing.Size(648, 348);
+            this.Controls.Add(this.txtFilterText);
+            this.Controls.Add(this.cboFilterSetting);
             this.Controls.Add(this.lvMain);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -144,6 +167,8 @@
         private System.Windows.Forms.ListView lvMain;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ComboBox cboFilterSetting;
+        private System.Windows.Forms.TextBox txtFilterText;
     }
 }
 

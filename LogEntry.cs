@@ -8,16 +8,18 @@ namespace LogViewer
 {
     public class LogEntry
     {
-        private string[] _numberEntryPair;
+        public string LineNumber { get; private set; }
+        public string EntryText { get; private set; }
 
         public LogEntry(string number, string entry)
         {
-            _numberEntryPair = new string[] { number, entry };
+            this.LineNumber = number;
+            this.EntryText = entry;
         }
 
-        public string[] EntryPair()
+        public string[] ToArray()
         {
-            return _numberEntryPair;
+            return new string[] { LineNumber, EntryText };
         }
     }
 }

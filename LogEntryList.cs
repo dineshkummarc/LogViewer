@@ -8,8 +8,5 @@ namespace LogViewer
 {
     public class LogEntryList : List<LogEntry>
     {
-        public LogEntryList()
-        {
-        }
     }
 }
