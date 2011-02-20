@@ -88,26 +88,55 @@ namespace LogViewer
 
         private void DisplayLogEntries()
         {
-            lvMain.BeginUpdate();
-            lvMain.Items.Clear();
-            foreach (var entry in MyLogEntryList)
+            if (!FilterUsingTextString)
             {
-                if (FilterUsingTextString && RemoveEntriesContainingText &&
-                    txtFilterText.Text != "" &&
-                    entry.EntryText.Contains(txtFilterText.Text))
-                {
-                    continue;
-                }
+                lvMain.BeginUpdate();
+                lvMain.Items.Clear();
 
-                if (FilterUsingTextString && !RemoveEntriesContainingText &&
-                    txtFilterText.Text != "" &&
-                    !entry.EntryText.Contains(txtFilterText.Text))
+                foreach (var entry in MyLogEntryList)
                 {
-                    continue;
+                    lvMain.Items.Add(new ListViewItem(entry.ToArray()));
                 }
-                lvMain.Items.Add(new ListViewItem(entry.ToArray()));
+                
+                lvMain.EndUpdate();
+                return;
             }
-            lvMain.EndUpdate();
+
+            if (FilterUsingTextString)
+            {
+                if (RemoveEntriesContainingText)
+                {
+                    lvMain.BeginUpdate();
+                    lvMain.Items.Clear();
+
+                    foreach (var entry in MyLogEntryList)
+                    {
+                        if (!entry.EntryText.Contains(txtFilterText.Text))
+                        {
+                            lvMain.Items.Add(new ListViewItem(entry.ToArray()));
+                        }
+                    }
+
+                    lvMain.EndUpdate();
+                    return;
+                }
+                else
+                {
+                    lvMain.BeginUpdate();
+                    lvMain.Items.Clear();
+
+                    foreach (var entry in MyLogEntryList)
+                    {
+                        if (entry.EntryText.Contains(txtFilterText.Text))
+                        {
+                            lvMain.Items.Add(new ListViewItem(entry.ToArray()));
+                        }
+                    }
+
+                    lvMain.EndUpdate();
+                    return;
+                }
+            }
         }
 
         private void cboFilterSetting_SelectedIndexChanged(object sender, EventArgs e)
@@ -116,6 +145,8 @@ namespace LogViewer
             {
                 FilterUsingTextString = false;
                 txtFilterText.ReadOnly = true;
+                DisplayLogEntries();
+                return;
             }
 
             if (cboFilterSetting.SelectedIndex == 1)
@@ -123,6 +154,8 @@ namespace LogViewer
                 FilterUsingTextString = true;
                 txtFilterText.ReadOnly = false;
                 RemoveEntriesContainingText = true;
+                DisplayLogEntries();
+                return;
             }
 
             if (cboFilterSetting.SelectedIndex == 2)
@@ -130,8 +163,9 @@ namespace LogViewer
                 FilterUsingTextString = true;
                 txtFilterText.ReadOnly = false;
                 RemoveEntriesContainingText = false;
+                DisplayLogEntries();
+                return;
             }
-            DisplayLogEntries();
         }
 
         private void txtFilterText_TextChanged(object sender, EventArgs e)
