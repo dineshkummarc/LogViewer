@@ -14,19 +14,19 @@ namespace LogViewer
     {
         public LogEntryList MyLogEntryList { get; private set; }
         public string FilePath { get; private set; }
-        public bool FilterUsingTextString { get; private set; }
-        public bool RemoveEntriesContainingText { get; private set; }
+        public bool ApplyingFilter { get; private set; }
+        public bool ShowContaining { get; private set; }
 
         public LogViewer()
         {
             InitializeComponent();
             MyLogEntryList = new LogEntryList();
-            cboFilterSetting.Items.Add("No Filter Applied");
-            cboFilterSetting.Items.Add("Filter - Remove Entries Containing This Text");
-            cboFilterSetting.Items.Add("Filter - Show Only Entries Containing This Text");
+            cboFilterSetting.Items.Add("No Filter Applied!");
+            cboFilterSetting.Items.Add("Show Only Containing:");
+            cboFilterSetting.Items.Add("Show Not Containing:");
             cboFilterSetting.SelectedIndex = 0;
-            FilterUsingTextString = false;
-            RemoveEntriesContainingText = true;
+            ApplyingFilter = false;
+            ShowContaining = true;
         }
 
         private void mnuExit_Click(object sender, EventArgs e)
@@ -88,48 +88,77 @@ namespace LogViewer
 
         private void DisplayLogEntries()
         {
-            lvMain.BeginUpdate();
-            lvMain.Items.Clear();
-            foreach (var entry in MyLogEntryList)
+            if (!ApplyingFilter)
             {
-                if (FilterUsingTextString && RemoveEntriesContainingText &&
-                    txtFilterText.Text != "" &&
-                    entry.EntryText.Contains(txtFilterText.Text))
+                lvMain.BeginUpdate();
+                lvMain.Items.Clear();
+                foreach (var entry in MyLogEntryList)
                 {
-                    continue;
+                    lvMain.Items.Add(new ListViewItem(entry.ToArray()));
                 }
-
-                if (FilterUsingTextString && !RemoveEntriesContainingText &&
-                    txtFilterText.Text != "" &&
-                    !entry.EntryText.Contains(txtFilterText.Text))
-                {
-                    continue;
-                }
-                lvMain.Items.Add(new ListViewItem(entry.ToArray()));
+                lvMain.EndUpdate();
+                UpdateEntryCounts(MyLogEntryList.Count);
+                return;
             }
-            lvMain.EndUpdate();
+            else
+            {
+                if (ShowContaining)
+                {
+                    int count = 0;
+                    lvMain.BeginUpdate();
+                    lvMain.Items.Clear();
+                    foreach (var entry in MyLogEntryList)
+                    {
+                        if (entry.EntryText.Contains(txtFilterText.Text))
+                        {
+                            lvMain.Items.Add(new ListViewItem(entry.ToArray()));
+                            count++;
+                        }
+                    }
+                    lvMain.EndUpdate();
+                    UpdateEntryCounts(count);
+                    return;
+                }
+                else
+                {
+                    int count = 0;
+                    lvMain.BeginUpdate();
+                    lvMain.Items.Clear();
+                    foreach (var entry in MyLogEntryList)
+                    {
+                        if (!entry.EntryText.Contains(txtFilterText.Text))
+                        {
+                            lvMain.Items.Add(new ListViewItem(entry.ToArray()));
+                            count++;
+                        }
+                    }
+                    lvMain.EndUpdate();
+                    UpdateEntryCounts(count);
+                    return;
+                }
+            }
         }
 
         private void cboFilterSetting_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboFilterSetting.SelectedIndex == 0)
+            switch (cboFilterSetting.SelectedIndex)
             {
-                FilterUsingTextString = false;
-                txtFilterText.ReadOnly = true;
-            }
-
-            if (cboFilterSetting.SelectedIndex == 1)
-            {
-                FilterUsingTextString = true;
-                txtFilterText.ReadOnly = false;
-                RemoveEntriesContainingText = true;
-            }
-
-            if (cboFilterSetting.SelectedIndex == 2)
-            {
-                FilterUsingTextString = true;
-                txtFilterText.ReadOnly = false;
-                RemoveEntriesContainingText = false;
+                case 0:
+                    ApplyingFilter = false;
+                    txtFilterText.ReadOnly = true;
+                    break;
+                case 1:
+                    ApplyingFilter = true;
+                    txtFilterText.ReadOnly = false;
+                    ShowContaining = true;
+                    break;
+                case 2:
+                    ApplyingFilter = true;
+                    txtFilterText.ReadOnly = false;
+                    ShowContaining = false;
+                    break;
+                default:
+                    break;
             }
             DisplayLogEntries();
         }
@@ -137,6 +166,12 @@ namespace LogViewer
         private void txtFilterText_TextChanged(object sender, EventArgs e)
         {
             DisplayLogEntries();
+        }
+
+        private void UpdateEntryCounts(int filterCount)
+        {
+            txtFilterCount.Text = filterCount.ToString();
+            txtFileCount.Text = MyLogEntryList.Count.ToString();
         }
     }
 }

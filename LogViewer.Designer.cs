@@ -39,6 +39,9 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cboFilterSetting = new System.Windows.Forms.ComboBox();
             this.txtFilterText = new System.Windows.Forms.TextBox();
+            this.txtFilterCount = new System.Windows.Forms.TextBox();
+            this.txtFileCount = new System.Windows.Forms.TextBox();
+            this.lblOf = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -116,32 +119,58 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Log Entry";
-            this.columnHeader2.Width = 502;
+            this.columnHeader2.Width = 520;
             // 
             // cboFilterSetting
             // 
             this.cboFilterSetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFilterSetting.FormattingEnabled = true;
-            this.cboFilterSetting.Location = new System.Drawing.Point(118, 27);
+            this.cboFilterSetting.Location = new System.Drawing.Point(288, 26);
             this.cboFilterSetting.Name = "cboFilterSetting";
-            this.cboFilterSetting.Size = new System.Drawing.Size(255, 21);
+            this.cboFilterSetting.Size = new System.Drawing.Size(142, 21);
             this.cboFilterSetting.TabIndex = 2;
             this.cboFilterSetting.SelectedIndexChanged += new System.EventHandler(this.cboFilterSetting_SelectedIndexChanged);
             // 
             // txtFilterText
             // 
-            this.txtFilterText.Location = new System.Drawing.Point(379, 27);
+            this.txtFilterText.Location = new System.Drawing.Point(436, 27);
             this.txtFilterText.Name = "txtFilterText";
             this.txtFilterText.ReadOnly = true;
-            this.txtFilterText.Size = new System.Drawing.Size(209, 20);
+            this.txtFilterText.Size = new System.Drawing.Size(168, 20);
             this.txtFilterText.TabIndex = 3;
             this.txtFilterText.TextChanged += new System.EventHandler(this.txtFilterText_TextChanged);
+            // 
+            // txtFilterCount
+            // 
+            this.txtFilterCount.Location = new System.Drawing.Point(12, 27);
+            this.txtFilterCount.Name = "txtFilterCount";
+            this.txtFilterCount.Size = new System.Drawing.Size(58, 20);
+            this.txtFilterCount.TabIndex = 4;
+            // 
+            // txtFileCount
+            // 
+            this.txtFileCount.Location = new System.Drawing.Point(98, 27);
+            this.txtFileCount.Name = "txtFileCount";
+            this.txtFileCount.Size = new System.Drawing.Size(58, 20);
+            this.txtFileCount.TabIndex = 5;
+            // 
+            // lblOf
+            // 
+            this.lblOf.AutoSize = true;
+            this.lblOf.Location = new System.Drawing.Point(76, 30);
+            this.lblOf.Name = "lblOf";
+            this.lblOf.Size = new System.Drawing.Size(16, 13);
+            this.lblOf.TabIndex = 6;
+            this.lblOf.Text = "of";
             // 
             // LogViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(648, 348);
+            this.Controls.Add(this.lblOf);
+            this.Controls.Add(this.txtFileCount);
+            this.Controls.Add(this.txtFilterCount);
             this.Controls.Add(this.txtFilterText);
             this.Controls.Add(this.cboFilterSetting);
             this.Controls.Add(this.lvMain);
@@ -169,6 +198,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ComboBox cboFilterSetting;
         private System.Windows.Forms.TextBox txtFilterText;
+        private System.Windows.Forms.TextBox txtFilterCount;
+        private System.Windows.Forms.TextBox txtFileCount;
+        private System.Windows.Forms.Label lblOf;
     }
 }
 
