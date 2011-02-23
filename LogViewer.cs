@@ -88,32 +88,24 @@ namespace LogViewer
 
         private void DisplayLogEntries()
         {
-<<<<<<< HEAD
             if (!ApplyingFilter)
             {
                 lvMain.BeginUpdate();
                 lvMain.Items.Clear();
-=======
-            if (!FilterUsingTextString)
-            {
-                lvMain.BeginUpdate();
-                lvMain.Items.Clear();
-
->>>>>>> d31bc57278f354d817906bb1e52a64782e5114f1
                 foreach (var entry in MyLogEntryList)
                 {
                     lvMain.Items.Add(new ListViewItem(entry.ToArray()));
                 }
-<<<<<<< HEAD
                 lvMain.EndUpdate();
                 UpdateEntryCounts(MyLogEntryList.Count);
                 return;
             }
             else
             {
+                int count = 0;
+
                 if (ShowContaining)
                 {
-                    int count = 0;
                     lvMain.BeginUpdate();
                     lvMain.Items.Clear();
                     foreach (var entry in MyLogEntryList)
@@ -126,35 +118,10 @@ namespace LogViewer
                     }
                     lvMain.EndUpdate();
                     UpdateEntryCounts(count);
-=======
-                
-                lvMain.EndUpdate();
-                return;
-            }
-
-            if (FilterUsingTextString)
-            {
-                if (RemoveEntriesContainingText)
-                {
-                    lvMain.BeginUpdate();
-                    lvMain.Items.Clear();
-
-                    foreach (var entry in MyLogEntryList)
-                    {
-                        if (!entry.EntryText.Contains(txtFilterText.Text))
-                        {
-                            lvMain.Items.Add(new ListViewItem(entry.ToArray()));
-                        }
-                    }
-
-                    lvMain.EndUpdate();
->>>>>>> d31bc57278f354d817906bb1e52a64782e5114f1
                     return;
                 }
                 else
                 {
-<<<<<<< HEAD
-                    int count = 0;
                     lvMain.BeginUpdate();
                     lvMain.Items.Clear();
                     foreach (var entry in MyLogEntryList)
@@ -167,20 +134,6 @@ namespace LogViewer
                     }
                     lvMain.EndUpdate();
                     UpdateEntryCounts(count);
-=======
-                    lvMain.BeginUpdate();
-                    lvMain.Items.Clear();
-
-                    foreach (var entry in MyLogEntryList)
-                    {
-                        if (entry.EntryText.Contains(txtFilterText.Text))
-                        {
-                            lvMain.Items.Add(new ListViewItem(entry.ToArray()));
-                        }
-                    }
-
-                    lvMain.EndUpdate();
->>>>>>> d31bc57278f354d817906bb1e52a64782e5114f1
                     return;
                 }
             }
@@ -190,7 +143,6 @@ namespace LogViewer
         {
             switch (cboFilterSetting.SelectedIndex)
             {
-<<<<<<< HEAD
                 case 0:
                     ApplyingFilter = false;
                     txtFilterText.ReadOnly = true;
@@ -207,31 +159,8 @@ namespace LogViewer
                     break;
                 default:
                     break;
-=======
-                FilterUsingTextString = false;
-                txtFilterText.ReadOnly = true;
-                DisplayLogEntries();
-                return;
             }
-
-            if (cboFilterSetting.SelectedIndex == 1)
-            {
-                FilterUsingTextString = true;
-                txtFilterText.ReadOnly = false;
-                RemoveEntriesContainingText = true;
-                DisplayLogEntries();
-                return;
-            }
-
-            if (cboFilterSetting.SelectedIndex == 2)
-            {
-                FilterUsingTextString = true;
-                txtFilterText.ReadOnly = false;
-                RemoveEntriesContainingText = false;
-                DisplayLogEntries();
-                return;
->>>>>>> d31bc57278f354d817906bb1e52a64782e5114f1
-            }
+            DisplayLogEntries();
         }
 
         private void txtFilterText_TextChanged(object sender, EventArgs e)
