@@ -12,14 +12,14 @@ namespace LogViewer
 {
     public partial class LogViewer : Form
     {
-        public LogEntryList MyLogEntryList { get; private set; }
+        public List<LogEntry> MyLogEntryList { get; private set; }
         public string FilePath { get; private set; }
         public bool Include { get; private set; }
 
         public LogViewer()
         {
             InitializeComponent();
-            MyLogEntryList = new LogEntryList();
+            MyLogEntryList = new List<LogEntry>();
             cboFilterSetting.Items.Add("Include:");
             cboFilterSetting.Items.Add("Exclude:");
             cboFilterSetting.SelectedIndex = 0;
@@ -90,9 +90,28 @@ namespace LogViewer
             lvMain.Items.Clear();
             foreach (var entry in MyLogEntryList)
             {
+                string searchString = "";
+                string entryTestString = "";
+
+                if ((cbxHideBlankLines.Checked == true) && (entry.EntryText == ""))
+                {
+                    continue;
+                }
+
+                if (cbxIgnoreCase.Checked == true)
+                {
+                    searchString = txtFilterText.Text.ToUpper();
+                    entryTestString = entry.EntryText.ToUpper();
+                }
+                else
+                {
+                    searchString = txtFilterText.Text;
+                    entryTestString = entry.EntryText;
+                }
+
                 if (Include)
                 {
-                    if (entry.EntryText.Contains(txtFilterText.Text))
+                    if (entryTestString.Contains(searchString))
                     {
                         lvMain.Items.Add(new ListViewItem(entry.ToArray()));
                         count++;
@@ -100,7 +119,7 @@ namespace LogViewer
                 }
                 else
                 {
-                    if (!entry.EntryText.Contains(txtFilterText.Text))
+                    if (!entryTestString.Contains(searchString))
                     {
                         lvMain.Items.Add(new ListViewItem(entry.ToArray()));
                         count++;
@@ -137,6 +156,22 @@ namespace LogViewer
         {
             lblResults.Text = "Showing: " + count.ToString() +
                 " of " + MyLogEntryList.Count.ToString();
+        }
+
+        private void cbxHideBlankLines_CheckedChanged(object sender, EventArgs e)
+        {
+            AddEntries();
+        }
+
+        private void cbxIgnoreCase_CheckedChanged(object sender, EventArgs e)
+        {
+            AddEntries();
+        }
+
+        private void mnuClose_Click(object sender, EventArgs e)
+        {
+            MyLogEntryList.Clear();
+            AddEntries();
         }
     }
 }

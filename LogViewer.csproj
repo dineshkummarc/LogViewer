@@ -53,6 +53,7 @@
     <StartupObject>LogViewer.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.9.10348, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,7 +73,7 @@
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
     <Compile Include="LogEntry.cs" />
-    <Compile Include="LogEntryList.cs" />
+    <Compile Include="LogEntryTests.cs" />
     <Compile Include="LogViewer.cs">
       <SubType>Form</SubType>
     </Compile>
